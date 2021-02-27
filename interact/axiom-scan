@@ -148,7 +148,13 @@ add_extra_args() {
     echo $new_command
 }
 
-
+keepalive(){
+        while [ "$alive" -eq 1 ]
+        do
+                sleep 300;
+                axiom-exec id -q;
+        done;
+}
 
 split_file() {
     file="$1"
@@ -443,6 +449,9 @@ if [[ -f "$local_wordlist" ]]; then
 fi
 
 ###########################################################################################################
+
+alive=1
+keepalive &
 
 # The command to execute on the remote host
 if [[ "$ext" == "default" ]]; then
